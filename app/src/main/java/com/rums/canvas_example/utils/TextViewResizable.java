@@ -14,6 +14,7 @@ public class TextViewResizable {
 
     public static final int MAX_LINE_COUNT = 3;
 
+    //https://stackoverflow.com/a/39994116/2289835
     public static void makeTextViewResizable(final TextView tv, final int maxLine, final String expandText, final boolean viewMore) {
 
         if (tv.getTag() == null) {
