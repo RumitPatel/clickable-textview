@@ -63,8 +63,7 @@ class WithClickableSpanActivity : AppCompatActivity() {
     }
 
     private fun setSpannableClick() {
-        val ss =
-            SpannableString("Laminaria is a genus of large brown seaweeds, commonly known as kelp, found in cool, nutrient-rich marine environments. Their complex thallus structure includes a holdfast, stipe, and blade. These seaweeds serves as vital compound of marine ecosystem, offering habitate and sustenance to various marine species.")
+        val ss = SpannableString(getString(R.string.demo_long_text))
         val clickableSpan: ClickableSpan = object : ClickableSpan() {
             override fun onClick(textView: View) {
                 toast("nutrient-rich marine clicked")
