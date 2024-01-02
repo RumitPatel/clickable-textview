@@ -26,5 +26,12 @@
         android:layout_margin="@dimen/_8sdp"
         android:text="With NoUnderLineClickSpan" />
 
+    <Button
+        android:id="@+id/btnWithCustomTest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_8sdp"
+        android:text="With Custom Test" />
+
 
 </LinearLayout>

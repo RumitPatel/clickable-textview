@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.rums.clickable_textview.custom_test.WithCustomTestActivity
 import com.rums.clickable_textview.with_native_click.WithNativeClickActivity
 import com.rums.clickable_textview.with_no_under_line_click_span.WithNoUnderLineSpanActivity
 import com.rums.clickable_textview.with_textview_resizable.WithTextViewResizableActivity
@@ -16,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnWithNativeClick: Button
     private lateinit var btnWithTextviewResizable: Button
     private lateinit var btnWithNoUnderLineClickSpan: Button
+    private lateinit var btnWithCustomTest: Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         btnWithNativeClick = findViewById(R.id.btnWithNativeClick)
         btnWithTextviewResizable = findViewById(R.id.btnWithTextviewResizable)
         btnWithNoUnderLineClickSpan = findViewById(R.id.btnWithNoUnderLineClickSpan)
+        btnWithCustomTest = findViewById(R.id.btnWithCustomTest)
     }
 
     private fun setListeners() {
@@ -45,6 +48,10 @@ class MainActivity : AppCompatActivity() {
 
         btnWithNoUnderLineClickSpan.setOnClickListener {
             startActivity(Intent(mContext, WithNoUnderLineSpanActivity::class.java))
+        }
+
+        btnWithCustomTest.setOnClickListener {
+            startActivity(Intent(mContext, WithCustomTestActivity::class.java))
         }
     }
 }
