@@ -1,12 +1,12 @@
-package com.rums.canvas_example.with_textview_resizable
+package com.rums.clickable_textview.with_textview_resizable
 
 import android.content.Context
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.rums.canvas_example.R
-import com.rums.canvas_example.with_textview_resizable.TextViewResizable.MAX_LINE_COUNT
+import com.rums.clickable_textview.R
+import com.rums.clickable_textview.with_textview_resizable.TextViewResizable.MAX_LINE_COUNT
 
 class WithTextViewResizableActivity : AppCompatActivity() {
 

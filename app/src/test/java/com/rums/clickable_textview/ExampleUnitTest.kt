@@ -1,4 +1,4 @@
-package com.rums.canvas_example
+package com.rums.clickable_textview
 
 import org.junit.Test
 

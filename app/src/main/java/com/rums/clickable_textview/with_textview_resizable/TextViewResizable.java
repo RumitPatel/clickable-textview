@@ -1,4 +1,4 @@
-package com.rums.canvas_example.with_textview_resizable;
+package com.rums.clickable_textview.with_textview_resizable;
 
 import android.text.Html;
 import android.text.SpannableStringBuilder;
@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
-import com.rums.canvas_example.R;
+import com.rums.clickable_textview.R;
 
 public class TextViewResizable {
 

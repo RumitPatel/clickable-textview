@@ -1,12 +1,12 @@
-package com.rums.canvas_example
+package com.rums.clickable_textview
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.rums.canvas_example.with_native_click.WithNativeClickActivity
-import com.rums.canvas_example.with_textview_resizable.WithTextViewResizableActivity
+import com.rums.clickable_textview.with_native_click.WithNativeClickActivity
+import com.rums.clickable_textview.with_textview_resizable.WithTextViewResizableActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,11 +32,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setListeners() {
-        btnWithNativeClick.setOnClickListener{
+        btnWithNativeClick.setOnClickListener {
             startActivity(Intent(mContext, WithNativeClickActivity::class.java))
         }
 
-        btnWithTextviewResizable.setOnClickListener{
+        btnWithTextviewResizable.setOnClickListener {
             startActivity(Intent(mContext, WithTextViewResizableActivity::class.java))
         }
     }

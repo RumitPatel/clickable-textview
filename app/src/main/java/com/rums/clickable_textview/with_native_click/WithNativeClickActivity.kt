@@ -1,11 +1,11 @@
-package com.rums.canvas_example.with_native_click
+package com.rums.clickable_textview.with_native_click
 
 import android.content.Context
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.rums.canvas_example.R
+import com.rums.clickable_textview.R
 
 class WithNativeClickActivity : AppCompatActivity() {
 
