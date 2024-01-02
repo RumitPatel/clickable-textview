@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
-import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
@@ -38,14 +37,10 @@ class WithClickableSpanActivity : AppCompatActivity() {
         tvDescription = findViewById(R.id.tvDescription)
         tvDescriptionReadMoreHide = findViewById(R.id.tvDescriptionReadMoreHide)
 
-//        enableDefaultClick()
         checkLineCountAndSetVisibility()
+        setSpannableClick()
     }
 
-    private fun enableDefaultClick() { // Enable TextView's click
-        tvOverview.movementMethod = LinkMovementMethod.getInstance()
-        tvDescription.movementMethod = LinkMovementMethod.getInstance()
-    }
 
     private fun checkLineCountAndSetVisibility() {
         tvOverview.movementMethod = LinkMovementMethod.getInstance()
@@ -65,16 +60,25 @@ class WithClickableSpanActivity : AppCompatActivity() {
                 tvDescriptionReadMoreHide.visibility = View.GONE
             }
         }
+    }
 
-
-        val ss = SpannableString("This is a sentence to check the lick which is clickable. ")
+    private fun setSpannableClick() {
+        val ss =
+            SpannableString("Laminaria is a genus of large brown seaweeds, commonly known as kelp, found in cool, nutrient-rich marine environments. Their complex thallus structure includes a holdfast, stipe, and blade. These seaweeds serves as vital compound of marine ecosystem, offering habitate and sustenance to various marine species.")
         val clickableSpan: ClickableSpan = object : ClickableSpan() {
             override fun onClick(textView: View) {
-                toast("Clicked")
+                toast("nutrient-rich marine clicked")
             }
         }
 
-        ss.setSpan(clickableSpan, 0, 10, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        val clickableSpan2: ClickableSpan = object : ClickableSpan() {
+            override fun onClick(textView: View) {
+                toast("offering habitate clicked")
+            }
+        }
+
+        ss.setSpan(clickableSpan, 85, 105, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        ss.setSpan(clickableSpan2, 252, 269, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         tvOverview.text = ss
     }
