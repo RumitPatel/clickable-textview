@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">clickable textview</string>
+
+    <string name="see_more">see more</string>
+    <string name="see_less">see less</string>
+
+    <string name="testttt">
+        This is a pre part of the description. <a href="https://www.w3schools.com">Click here to open website.</a> This is a post part of the description.
+        This is a pre part of the description. <a href="https://www.w3schools.com">Click here to open website.</a> This is a post part of the description.
+        This is a pre part of the description. <a href="https://www.w3schools.com">Click here to open website.</a> This is a post part of the description.
+        This is a pre part of the description. <a href="https://www.w3schools.com">Click here to open website.</a> This is a post part of the description.
+        This is a pre part of the description. <a href="https://www.w3schools.com">Click here to open website.</a> This is a post part of the description.
+        This is a pre part of the description. <a href="https://www.w3schools.com">Click here to open website.</a> This is a post part of the description.
+    </string>
+    <string name="testttt_small">This is a short test content.</string>
+
+</resources>
