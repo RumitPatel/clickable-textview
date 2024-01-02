@@ -1,6 +1,7 @@
 package com.rums.clickable_textview.with_clickable_span
 
 import android.content.Context
+import android.graphics.Paint
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
@@ -23,7 +24,9 @@ class WithClickableSpanActivity : AppCompatActivity() {
     private lateinit var tvDescription: TextView
     private lateinit var tvDescriptionReadMoreHide: TextView
 
-    private var longString:String? = null
+    private var longString: String? = null
+
+    private var isShortenOverViewContent = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_with_clickable_span)
@@ -40,8 +43,11 @@ class WithClickableSpanActivity : AppCompatActivity() {
         tvDescription = findViewById(R.id.tvDescription)
         tvDescriptionReadMoreHide = findViewById(R.id.tvDescriptionReadMoreHide)
 
-        checkLineCountAndSetVisibility()
         setSpannableClickToOverView(longString, getClickableList())
+        checkLineCountAndSetVisibility()
+
+        tvOverviewReadMoreHide.paintFlags = tvOverviewReadMoreHide.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+        tvDescriptionReadMoreHide.paintFlags = tvDescriptionReadMoreHide.paintFlags or Paint.UNDERLINE_TEXT_FLAG
     }
 
 
@@ -49,9 +55,29 @@ class WithClickableSpanActivity : AppCompatActivity() {
         tvOverview.movementMethod = LinkMovementMethod.getInstance()
         tvOverview.post {
             if (tvOverview.lineCount > 3) {
+
                 tvOverviewReadMoreHide.visibility = View.VISIBLE
+
+                val lineEndIndex: Int = tvOverview.layout.getLineEnd(3 - 1)
+                val trimmedText: String = tvOverview.text.subSequence(0, lineEndIndex).toString()
+
+                setSpannableClickToOverView(trimmedText, getClickableList())
+                isShortenOverViewContent = true
+
+                tvOverviewReadMoreHide.setOnClickListener {
+                    if (isShortenOverViewContent) {
+                        setSpannableClickToOverView(longString, getClickableList())
+                        isShortenOverViewContent = false
+                        tvOverviewReadMoreHide.text = getString(R.string.see_less)
+                    } else {
+                        setSpannableClickToOverView(trimmedText, getClickableList())
+                        isShortenOverViewContent = true
+                        tvOverviewReadMoreHide.text = getString(R.string.see_more)
+                    }
+                }
             } else {
                 tvOverviewReadMoreHide.visibility = View.GONE
+                setSpannableClickToOverView(longString, getClickableList())
             }
         }
 

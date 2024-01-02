@@ -43,7 +43,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/_2sdp"
-                    android:text="Read more..."
+                    android:text="@string/see_more"
                     android:textSize="@dimen/_14sdp"
                     android:visibility="gone"
                     tools:visibility="visible" />
@@ -78,7 +78,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/_2sdp"
-                    android:text="Read more..."
+                    android:text="@string/see_more"
                     android:textSize="@dimen/_14sdp"
                     android:visibility="gone"
                     tools:visibility="visible" />
