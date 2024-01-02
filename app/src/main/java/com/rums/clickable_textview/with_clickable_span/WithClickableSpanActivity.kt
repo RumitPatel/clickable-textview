@@ -22,8 +22,6 @@ class WithClickableSpanActivity : AppCompatActivity() {
 
     private lateinit var tvOverview: TextView
     private lateinit var tvOverviewReadMoreHide: TextView
-    private lateinit var tvDescription: TextView
-    private lateinit var tvDescriptionReadMoreHide: TextView
 
     private var longString: String? = null
 
@@ -41,17 +39,12 @@ class WithClickableSpanActivity : AppCompatActivity() {
 
         tvOverview = findViewById(R.id.tvOverview)
         tvOverviewReadMoreHide = findViewById(R.id.tvOverviewReadMoreHide)
-        tvDescription = findViewById(R.id.tvDescription)
-        tvDescriptionReadMoreHide = findViewById(R.id.tvDescriptionReadMoreHide)
 
         setSpannableClickToOverView(longString, getClickableList(), tvOverview)
-        setSpannableClickToOverView(longString, getClickableList(), tvDescription)
         checkLineCountAndSetVisibility()
 
         tvOverviewReadMoreHide.paintFlags =
             tvOverviewReadMoreHide.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-        tvDescriptionReadMoreHide.paintFlags =
-            tvDescriptionReadMoreHide.paintFlags or Paint.UNDERLINE_TEXT_FLAG
     }
 
 
@@ -82,35 +75,6 @@ class WithClickableSpanActivity : AppCompatActivity() {
             } else {
                 tvOverviewReadMoreHide.visibility = View.GONE
                 setSpannableClickToOverView(longString, getClickableList(), tvOverview)
-            }
-        }
-
-        tvDescription.movementMethod = LinkMovementMethod.getInstance()
-        tvDescription.post {
-            if (tvDescription.lineCount > MAX_SEE_MORE_LINES) {
-                var isContentShorten: Boolean
-                tvDescriptionReadMoreHide.visibility = View.VISIBLE
-
-                val lineEndIndex: Int = tvDescription.layout.getLineEnd(MAX_SEE_MORE_LINES - 1)
-                val trimmedText: String = tvDescription.text.subSequence(0, lineEndIndex).toString()
-
-                setSpannableClickToOverView(trimmedText, getClickableList(), tvDescription)
-                isContentShorten = true
-
-                tvDescriptionReadMoreHide.setOnClickListener {
-                    if (isContentShorten) {
-                        setSpannableClickToOverView(longString, getClickableList(), tvDescription)
-                        isContentShorten = false
-                        tvDescriptionReadMoreHide.text = getString(R.string.see_less)
-                    } else {
-                        setSpannableClickToOverView(trimmedText, getClickableList(), tvDescription)
-                        isContentShorten = true
-                        tvDescriptionReadMoreHide.text = getString(R.string.see_more)
-                    }
-                }
-            } else {
-                tvDescriptionReadMoreHide.visibility = View.GONE
-                setSpannableClickToOverView(longString, getClickableList(), tvDescription)
             }
         }
     }
