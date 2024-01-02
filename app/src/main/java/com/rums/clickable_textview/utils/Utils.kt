@@ -1,10 +1,30 @@
 package com.rums.clickable_textview.utils
 
 import android.content.Context
+import android.os.Build
+import android.text.Html
+import android.text.TextUtils
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.text.HtmlCompat
 import com.rums.clickable_textview.with_clickable_span.ClickContentInfo
 
+const val MAX_SEE_MORE_LINES = 3
+
 class Utils {
+}
+
+fun setHtmlStringToTextView(htmlString: String?, textView: TextView) {
+    if(htmlString == null) {return}
+    if (!TextUtils.isEmpty(htmlString)) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            textView.text = Html.fromHtml(htmlString, Html.FROM_HTML_MODE_COMPACT)
+        } else {
+            textView.text = HtmlCompat.fromHtml(htmlString, HtmlCompat.FROM_HTML_MODE_LEGACY)
+        }
+    } else {
+        textView.text = ""
+    }
 }
 
 fun Context.toast(message: String?) {

@@ -1,6 +1,7 @@
 package com.rums.clickable_textview.with_clickable_span
 
 import android.content.Context
+import android.graphics.Paint
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
@@ -10,6 +11,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.rums.clickable_textview.R
+import com.rums.clickable_textview.utils.MAX_SEE_MORE_LINES
 import com.rums.clickable_textview.utils.getClickableList
 import com.rums.clickable_textview.utils.toast
 
@@ -20,8 +22,9 @@ class WithClickableSpanActivity : AppCompatActivity() {
 
     private lateinit var tvOverview: TextView
     private lateinit var tvOverviewReadMoreHide: TextView
-    private lateinit var tvDescription: TextView
-    private lateinit var tvDescriptionReadMoreHide: TextView
+
+    private var longString: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,42 +35,60 @@ class WithClickableSpanActivity : AppCompatActivity() {
 
     private fun initComponents() {
         mContext = this
+        longString = getString(R.string.demo_long_text)
 
         tvOverview = findViewById(R.id.tvOverview)
         tvOverviewReadMoreHide = findViewById(R.id.tvOverviewReadMoreHide)
-        tvDescription = findViewById(R.id.tvDescription)
-        tvDescriptionReadMoreHide = findViewById(R.id.tvDescriptionReadMoreHide)
 
+        setSpannableClickToOverView(longString, getClickableList(), tvOverview)
         checkLineCountAndSetVisibility()
-        setSpannableClick()
+
+        tvOverviewReadMoreHide.paintFlags =
+            tvOverviewReadMoreHide.paintFlags or Paint.UNDERLINE_TEXT_FLAG
     }
 
 
     private fun checkLineCountAndSetVisibility() {
         tvOverview.movementMethod = LinkMovementMethod.getInstance()
         tvOverview.post {
-            if (tvOverview.lineCount > 3) {
+            if (tvOverview.lineCount > MAX_SEE_MORE_LINES) {
+                var isContentShorten: Boolean
                 tvOverviewReadMoreHide.visibility = View.VISIBLE
+
+                val lineEndIndex: Int = tvOverview.layout.getLineEnd(MAX_SEE_MORE_LINES - 1)
+                val trimmedText: String = tvOverview.text.subSequence(0, lineEndIndex).toString()
+
+                setSpannableClickToOverView(trimmedText, getClickableList(), tvOverview)
+                isContentShorten = true
+
+                tvOverviewReadMoreHide.setOnClickListener {
+                    if (isContentShorten) {
+                        setSpannableClickToOverView(longString, getClickableList(), tvOverview)
+                        isContentShorten = false
+                        tvOverviewReadMoreHide.text = getString(R.string.see_less)
+                    } else {
+                        setSpannableClickToOverView(trimmedText, getClickableList(), tvOverview)
+                        isContentShorten = true
+                        tvOverviewReadMoreHide.text = getString(R.string.see_more)
+                    }
+                }
             } else {
                 tvOverviewReadMoreHide.visibility = View.GONE
-            }
-        }
-
-        tvDescription.movementMethod = LinkMovementMethod.getInstance()
-        tvDescription.post {
-            if (tvDescription.lineCount > 3) {
-                tvDescriptionReadMoreHide.visibility = View.VISIBLE
-            } else {
-                tvDescriptionReadMoreHide.visibility = View.GONE
+                setSpannableClickToOverView(longString, getClickableList(), tvOverview)
             }
         }
     }
 
-    private fun setSpannableClick() {
-        val longString = getString(R.string.demo_long_text)
-        val ss = SpannableString(longString)
+    private fun setSpannableClickToOverView(
+        stringContent: String?,
+        clickableList: ArrayList<ClickContentInfo?>,
+        textView: TextView
+    ) {
+        if (stringContent == null) {
+            return
+        }
+        val ss = SpannableString(stringContent)
 
-        val clickableList = getClickableList()
         for (clickableObj in clickableList) {
             if (clickableObj == null) {
                 break
@@ -75,9 +96,9 @@ class WithClickableSpanActivity : AppCompatActivity() {
             if (clickableObj.word == null) {
                 break
             }
-            if (longString.contains(clickableObj.word)) {
+            if (stringContent.contains(clickableObj.word)) {
                 val wordToFind = clickableObj.word
-                val indexStart = longString.indexOf(wordToFind)
+                val indexStart = stringContent.indexOf(wordToFind)
                 val indexEnd = indexStart + wordToFind.length
 
                 val clickableSpan: ClickableSpan = object : ClickableSpan() {
@@ -88,6 +109,6 @@ class WithClickableSpanActivity : AppCompatActivity() {
                 ss.setSpan(clickableSpan, indexStart, indexEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             }
         }
-        tvOverview.text = ss
+        textView.text = ss
     }
 }

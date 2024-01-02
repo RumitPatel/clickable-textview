@@ -25,10 +25,11 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".with_textview_resizable.WithTextViewResizableActivity"/>
-        <activity android:name=".with_native_click.WithNativeClickActivity"/>
-        <activity android:name=".with_no_under_line_click_span.WithNoUnderLineSpanActivity"/>
-        <activity android:name=".with_clickable_span.WithClickableSpanActivity"/>
+        <activity android:name=".with_textview_resizable.WithTextViewResizableActivity" />
+        <activity android:name=".with_native_click.WithNativeClickActivity" />
+        <activity android:name=".with_no_under_line_click_span.WithNoUnderLineSpanActivity" />
+        <activity android:name=".with_clickable_span.WithClickableSpanActivity" />
+        <activity android:name=".with_html.WithHtmlActivity" />
     </application>
 
 </manifest>
