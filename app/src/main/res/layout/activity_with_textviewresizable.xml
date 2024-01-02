@@ -35,7 +35,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/_6sdp"
-                    android:text="@string/testttt_small"
+                    android:text="@string/demo_short_text"
                     android:textSize="@dimen/_14sdp" />
 
                 <TextView
@@ -70,7 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/_6sdp"
-                    android:text="@string/testttt"
+                    android:text="@string/demo_long_hyperlink_text"
                     android:textSize="@dimen/_14sdp" />
 
                 <TextView

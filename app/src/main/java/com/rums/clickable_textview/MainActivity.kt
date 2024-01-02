@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.rums.clickable_textview.with_native_click.WithNativeClickActivity
+import com.rums.clickable_textview.with_no_under_line_click_span.WithNoUnderLineSpanActivity
 import com.rums.clickable_textview.with_textview_resizable.WithTextViewResizableActivity
 
 class MainActivity : AppCompatActivity() {
@@ -14,6 +15,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var btnWithNativeClick: Button
     private lateinit var btnWithTextviewResizable: Button
+    private lateinit var btnWithNoUnderLineClickSpan: Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         btnWithNativeClick = findViewById(R.id.btnWithNativeClick)
         btnWithTextviewResizable = findViewById(R.id.btnWithTextviewResizable)
+        btnWithNoUnderLineClickSpan = findViewById(R.id.btnWithNoUnderLineClickSpan)
     }
 
     private fun setListeners() {
@@ -38,6 +41,10 @@ class MainActivity : AppCompatActivity() {
 
         btnWithTextviewResizable.setOnClickListener {
             startActivity(Intent(mContext, WithTextViewResizableActivity::class.java))
+        }
+
+        btnWithNoUnderLineClickSpan.setOnClickListener {
+            startActivity(Intent(mContext, WithNoUnderLineSpanActivity::class.java))
         }
     }
 }

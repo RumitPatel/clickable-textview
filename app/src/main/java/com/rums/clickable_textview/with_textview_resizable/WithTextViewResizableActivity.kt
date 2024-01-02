@@ -43,7 +43,7 @@ class WithTextViewResizableActivity : AppCompatActivity() {
     }
 
     private fun testSeeMore() {
-        tvOverview.text = getString(R.string.testttt_small)
+        tvOverview.text = getString(R.string.demo_short_text)
         TextViewResizable.makeTextViewResizable(
             tvOverview,
             MAX_LINE_COUNT,
@@ -51,7 +51,7 @@ class WithTextViewResizableActivity : AppCompatActivity() {
             true
         )
 
-        tvDescription.text = getString(R.string.testttt)
+        tvDescription.text = getString(R.string.demo_long_hyperlink_text)
         TextViewResizable.makeTextViewResizable(
             tvDescription,
             MAX_LINE_COUNT,
