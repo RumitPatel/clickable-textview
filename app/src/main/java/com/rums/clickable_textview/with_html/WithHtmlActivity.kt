@@ -8,7 +8,6 @@ import android.text.method.LinkMovementMethod
 import android.text.style.URLSpan
 import android.view.MotionEvent
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.rums.clickable_textview.R
 import com.rums.clickable_textview.utils.setHtmlStringToTextView
@@ -36,7 +35,11 @@ class WithHtmlActivity : AppCompatActivity() {
         mContext = this
 //        longString = getString(R.string.demo_html_text)
         longString =
-            "<html>Hello Test user,<br><br> <a href=\"https://www.google.com\">Click here.</a> <br><br> Thanks.</html>"
+            "<html>Laminaria is a genus of large brown seaweeds, commonly known as kelp, found in cool, nutrient-rich marine environments. Their <a href=\"this is the description of the complex thallus. this is the description of the complex thallus. this is the description of the complex thallus.\">complex thallus.</a> <ul>\n" +
+                    "    <li>First item</li>\n" +
+                    "    <li>Second item</li>\n" +
+                    "    <li>Third item</li>\n" +
+                    "</ul> structure includes a holdfast, stipe, and blade. These seaweeds serves as vital compound of marine ecosystem, <a href=\"this is the description of the strucutre.\">the structure.</a> offering habitate and sustenance to various marine species. <br> <br> Thanks.</html>"
 
         tvOverview = findViewById(R.id.tvOverview)
         tvOverviewReadMoreHide = findViewById(R.id.tvOverviewReadMoreHide)
@@ -44,45 +47,10 @@ class WithHtmlActivity : AppCompatActivity() {
 
         tvOverview.movementMethod = object : TextViewLinkHandler() {
             override fun onLinkClick(url: String?) {
-                toast("url = $url")
+                toast("clicked data: $url")
             }
         }
 
-//        tvOverview.movementMethod = LinkMovementMethod.getInstance()
         setHtmlStringToTextView(longString, tvOverview)
-
-
     }
-
-
-    abstract class TextViewLinkHandler : LinkMovementMethod() {
-        override fun onTouchEvent(
-            widget: TextView,
-            buffer: Spannable,
-            event: MotionEvent
-        ): Boolean {
-            if (event.action != MotionEvent.ACTION_UP) return super.onTouchEvent(
-                widget,
-                buffer,
-                event
-            )
-            var x = event.x.toInt()
-            var y = event.y.toInt()
-            x -= widget.totalPaddingLeft
-            y -= widget.totalPaddingTop
-            x += widget.scrollX
-            y += widget.scrollY
-            val layout: Layout = widget.layout
-            val line: Int = layout.getLineForVertical(y)
-            val off: Int = layout.getOffsetForHorizontal(line, x.toFloat())
-            val link = buffer.getSpans(off, off, URLSpan::class.java)
-            if (link.isNotEmpty()) {
-                onLinkClick(link[0].url)
-            }
-            return true
-        }
-
-        abstract fun onLinkClick(url: String?)
-    }
-
 }
