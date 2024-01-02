@@ -47,7 +47,7 @@ class WithTextViewResizableActivity : AppCompatActivity() {
         TextViewResizable.makeTextViewResizable(
             tvOverview,
             MAX_LINE_COUNT,
-            getString(R.string.see_more),
+            getString(R.string.see_less),
             true
         )
 
