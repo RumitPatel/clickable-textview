@@ -23,6 +23,7 @@ class WithClickableSpanActivity : AppCompatActivity() {
     private lateinit var tvDescription: TextView
     private lateinit var tvDescriptionReadMoreHide: TextView
 
+    private var longString:String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_with_clickable_span)
@@ -32,6 +33,7 @@ class WithClickableSpanActivity : AppCompatActivity() {
 
     private fun initComponents() {
         mContext = this
+        longString = getString(R.string.demo_long_text)
 
         tvOverview = findViewById(R.id.tvOverview)
         tvOverviewReadMoreHide = findViewById(R.id.tvOverviewReadMoreHide)
@@ -39,7 +41,7 @@ class WithClickableSpanActivity : AppCompatActivity() {
         tvDescriptionReadMoreHide = findViewById(R.id.tvDescriptionReadMoreHide)
 
         checkLineCountAndSetVisibility()
-        setSpannableClick()
+        setSpannableClickToOverView(longString, getClickableList())
     }
 
 
@@ -63,11 +65,15 @@ class WithClickableSpanActivity : AppCompatActivity() {
         }
     }
 
-    private fun setSpannableClick() {
-        val longString = getString(R.string.demo_long_text)
-        val ss = SpannableString(longString)
+    private fun setSpannableClickToOverView(
+        stringContent: String?,
+        clickableList: ArrayList<ClickContentInfo?>
+    ) {
+        if (stringContent == null) {
+            return
+        }
+        val ss = SpannableString(stringContent)
 
-        val clickableList = getClickableList()
         for (clickableObj in clickableList) {
             if (clickableObj == null) {
                 break
@@ -75,9 +81,9 @@ class WithClickableSpanActivity : AppCompatActivity() {
             if (clickableObj.word == null) {
                 break
             }
-            if (longString.contains(clickableObj.word)) {
+            if (stringContent.contains(clickableObj.word)) {
                 val wordToFind = clickableObj.word
-                val indexStart = longString.indexOf(wordToFind)
+                val indexStart = stringContent.indexOf(wordToFind)
                 val indexEnd = indexStart + wordToFind.length
 
                 val clickableSpan: ClickableSpan = object : ClickableSpan() {
