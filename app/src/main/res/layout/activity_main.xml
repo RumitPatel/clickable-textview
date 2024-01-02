@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/_18sdp">
+
+    <Button
+        android:id="@+id/btnWithNativeClick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_8sdp"
+        android:text="With Native Click" />
+
+    <Button
+        android:id="@+id/btnWithTextviewResizable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_8sdp"
+        android:text="With TextViewResizable" />
+
+    <Button
+        android:id="@+id/btnWithNoUnderLineClickSpan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_8sdp"
+        android:text="With NoUnderLineClickSpan" />
+
+    <Button
+        android:id="@+id/btnWithCustomTest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_8sdp"
+        android:text="With Custom Test" />
+
+
+</LinearLayout>
