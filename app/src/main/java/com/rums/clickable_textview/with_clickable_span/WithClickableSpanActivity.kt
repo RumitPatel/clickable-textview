@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.rums.clickable_textview.R
+import com.rums.clickable_textview.utils.MAX_SEE_MORE_LINES
 import com.rums.clickable_textview.utils.getClickableList
 import com.rums.clickable_textview.utils.toast
 
@@ -26,7 +27,7 @@ class WithClickableSpanActivity : AppCompatActivity() {
 
     private var longString: String? = null
 
-    private var isShortenOverViewContent = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_with_clickable_span)
@@ -43,57 +44,81 @@ class WithClickableSpanActivity : AppCompatActivity() {
         tvDescription = findViewById(R.id.tvDescription)
         tvDescriptionReadMoreHide = findViewById(R.id.tvDescriptionReadMoreHide)
 
-        setSpannableClickToOverView(longString, getClickableList())
+        setSpannableClickToOverView(longString, getClickableList(), tvOverview)
+        setSpannableClickToOverView(longString, getClickableList(), tvDescription)
         checkLineCountAndSetVisibility()
 
-        tvOverviewReadMoreHide.paintFlags = tvOverviewReadMoreHide.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-        tvDescriptionReadMoreHide.paintFlags = tvDescriptionReadMoreHide.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+        tvOverviewReadMoreHide.paintFlags =
+            tvOverviewReadMoreHide.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+        tvDescriptionReadMoreHide.paintFlags =
+            tvDescriptionReadMoreHide.paintFlags or Paint.UNDERLINE_TEXT_FLAG
     }
 
 
     private fun checkLineCountAndSetVisibility() {
         tvOverview.movementMethod = LinkMovementMethod.getInstance()
         tvOverview.post {
-            if (tvOverview.lineCount > 3) {
-
+            if (tvOverview.lineCount > MAX_SEE_MORE_LINES) {
+                var isContentShorten: Boolean
                 tvOverviewReadMoreHide.visibility = View.VISIBLE
 
-                val lineEndIndex: Int = tvOverview.layout.getLineEnd(3 - 1)
+                val lineEndIndex: Int = tvOverview.layout.getLineEnd(MAX_SEE_MORE_LINES - 1)
                 val trimmedText: String = tvOverview.text.subSequence(0, lineEndIndex).toString()
 
-                setSpannableClickToOverView(trimmedText, getClickableList())
-                isShortenOverViewContent = true
+                setSpannableClickToOverView(trimmedText, getClickableList(), tvOverview)
+                isContentShorten = true
 
                 tvOverviewReadMoreHide.setOnClickListener {
-                    if (isShortenOverViewContent) {
-                        setSpannableClickToOverView(longString, getClickableList())
-                        isShortenOverViewContent = false
+                    if (isContentShorten) {
+                        setSpannableClickToOverView(longString, getClickableList(), tvOverview)
+                        isContentShorten = false
                         tvOverviewReadMoreHide.text = getString(R.string.see_less)
                     } else {
-                        setSpannableClickToOverView(trimmedText, getClickableList())
-                        isShortenOverViewContent = true
+                        setSpannableClickToOverView(trimmedText, getClickableList(), tvOverview)
+                        isContentShorten = true
                         tvOverviewReadMoreHide.text = getString(R.string.see_more)
                     }
                 }
             } else {
                 tvOverviewReadMoreHide.visibility = View.GONE
-                setSpannableClickToOverView(longString, getClickableList())
+                setSpannableClickToOverView(longString, getClickableList(), tvOverview)
             }
         }
 
         tvDescription.movementMethod = LinkMovementMethod.getInstance()
         tvDescription.post {
-            if (tvDescription.lineCount > 3) {
+            if (tvDescription.lineCount > MAX_SEE_MORE_LINES) {
+                var isContentShorten: Boolean
                 tvDescriptionReadMoreHide.visibility = View.VISIBLE
+
+                val lineEndIndex: Int = tvDescription.layout.getLineEnd(MAX_SEE_MORE_LINES - 1)
+                val trimmedText: String = tvDescription.text.subSequence(0, lineEndIndex).toString()
+
+                setSpannableClickToOverView(trimmedText, getClickableList(), tvDescription)
+                isContentShorten = true
+
+                tvDescriptionReadMoreHide.setOnClickListener {
+                    if (isContentShorten) {
+                        setSpannableClickToOverView(longString, getClickableList(), tvDescription)
+                        isContentShorten = false
+                        tvDescriptionReadMoreHide.text = getString(R.string.see_less)
+                    } else {
+                        setSpannableClickToOverView(trimmedText, getClickableList(), tvDescription)
+                        isContentShorten = true
+                        tvDescriptionReadMoreHide.text = getString(R.string.see_more)
+                    }
+                }
             } else {
                 tvDescriptionReadMoreHide.visibility = View.GONE
+                setSpannableClickToOverView(longString, getClickableList(), tvDescription)
             }
         }
     }
 
     private fun setSpannableClickToOverView(
         stringContent: String?,
-        clickableList: ArrayList<ClickContentInfo?>
+        clickableList: ArrayList<ClickContentInfo?>,
+        textView: TextView
     ) {
         if (stringContent == null) {
             return
@@ -120,6 +145,6 @@ class WithClickableSpanActivity : AppCompatActivity() {
                 ss.setSpan(clickableSpan, indexStart, indexEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             }
         }
-        tvOverview.text = ss
+        textView.text = ss
     }
 }

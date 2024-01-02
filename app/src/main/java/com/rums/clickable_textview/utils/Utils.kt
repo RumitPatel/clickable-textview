@@ -4,6 +4,8 @@ import android.content.Context
 import android.widget.Toast
 import com.rums.clickable_textview.with_clickable_span.ClickContentInfo
 
+const val MAX_SEE_MORE_LINES = 3
+
 class Utils {
 }
 
