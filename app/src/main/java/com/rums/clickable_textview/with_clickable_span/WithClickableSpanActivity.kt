@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.rums.clickable_textview.R
+import com.rums.clickable_textview.utils.getClickableList
 import com.rums.clickable_textview.utils.toast
 
 
@@ -63,22 +64,30 @@ class WithClickableSpanActivity : AppCompatActivity() {
     }
 
     private fun setSpannableClick() {
-        val ss = SpannableString(getString(R.string.demo_long_text))
-        val clickableSpan: ClickableSpan = object : ClickableSpan() {
-            override fun onClick(textView: View) {
-                toast("nutrient-rich marine clicked")
+        val longString = getString(R.string.demo_long_text)
+        val ss = SpannableString(longString)
+
+        val clickableList = getClickableList()
+        for (clickableObj in clickableList) {
+            if (clickableObj == null) {
+                break
+            }
+            if (clickableObj.word == null) {
+                break
+            }
+            if (longString.contains(clickableObj.word)) {
+                val wordToFind = clickableObj.word
+                val indexStart = longString.indexOf(wordToFind)
+                val indexEnd = indexStart + wordToFind.length
+
+                val clickableSpan: ClickableSpan = object : ClickableSpan() {
+                    override fun onClick(textView: View) {
+                        toast(clickableObj.message)
+                    }
+                }
+                ss.setSpan(clickableSpan, indexStart, indexEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             }
         }
-
-        val clickableSpan2: ClickableSpan = object : ClickableSpan() {
-            override fun onClick(textView: View) {
-                toast("offering habitate clicked")
-            }
-        }
-
-        ss.setSpan(clickableSpan, 85, 105, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        ss.setSpan(clickableSpan2, 252, 269, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-
         tvOverview.text = ss
     }
 }
