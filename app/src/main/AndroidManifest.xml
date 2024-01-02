@@ -28,7 +28,7 @@
         <activity android:name=".with_textview_resizable.WithTextViewResizableActivity"/>
         <activity android:name=".with_native_click.WithNativeClickActivity"/>
         <activity android:name=".with_no_under_line_click_span.WithNoUnderLineSpanActivity"/>
-        <activity android:name=".custom_test.WithCustomTestActivity"/>
+        <activity android:name=".with_clickable_span.WithClickableSpanActivity"/>
     </application>
 
 </manifest>
