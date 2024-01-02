@@ -31,7 +31,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_8sdp"
-        android:text="With Custom Test" />
+        android:text="With Clickable span" />
+
+    <Button
+        android:id="@+id/btnWithHtml"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_8sdp"
+        android:text="With Html" />
 
 
 </LinearLayout>

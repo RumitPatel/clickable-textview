@@ -12,6 +12,7 @@
         This is a pre part of the description. <a href="https://www.w3schools.com">Click here to open website.</a> This is a post part of the description.
         This is a pre part of the description. <a href="https://www.w3schools.com">Click here to open website.</a> This is a post part of the description.
     </string>
+    <string name="demo_html_text"><html>Hello Test user, <a href="https://www.w3schools.com">Click here to open website.</a></html></string>
     <string name="demo_short_text">This is a short test content.</string>
 
 </resources>
