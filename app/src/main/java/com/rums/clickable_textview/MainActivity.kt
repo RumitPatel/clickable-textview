@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.rums.clickable_textview.custom_test.WithCustomTestActivity
+import com.rums.clickable_textview.with_clickable_span.WithClickableSpanActivity
 import com.rums.clickable_textview.with_native_click.WithNativeClickActivity
 import com.rums.clickable_textview.with_no_under_line_click_span.WithNoUnderLineSpanActivity
 import com.rums.clickable_textview.with_textview_resizable.WithTextViewResizableActivity
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnWithCustomTest.setOnClickListener {
-            startActivity(Intent(mContext, WithCustomTestActivity::class.java))
+            startActivity(Intent(mContext, WithClickableSpanActivity::class.java))
         }
     }
 }

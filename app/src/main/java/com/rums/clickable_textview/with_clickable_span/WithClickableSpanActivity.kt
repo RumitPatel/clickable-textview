@@ -1,14 +1,20 @@
-package com.rums.clickable_textview.custom_test
+package com.rums.clickable_textview.with_clickable_span
 
 import android.content.Context
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
 import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.rums.clickable_textview.R
+import com.rums.clickable_textview.utils.getClickableList
+import com.rums.clickable_textview.utils.toast
 
-class WithCustomTestActivity : AppCompatActivity() {
+
+class WithClickableSpanActivity : AppCompatActivity() {
 
     private lateinit var mContext: Context
 
@@ -19,7 +25,7 @@ class WithCustomTestActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_with_custom_test)
+        setContentView(R.layout.activity_with_clickable_span)
 
         initComponents()
     }
@@ -32,19 +38,15 @@ class WithCustomTestActivity : AppCompatActivity() {
         tvDescription = findViewById(R.id.tvDescription)
         tvDescriptionReadMoreHide = findViewById(R.id.tvDescriptionReadMoreHide)
 
-//        enableDefaultClick()
         checkLineCountAndSetVisibility()
+        setSpannableClick()
     }
 
-    private fun enableDefaultClick() { // Enable TextView's click
-        tvOverview.movementMethod = LinkMovementMethod.getInstance()
-        tvDescription.movementMethod = LinkMovementMethod.getInstance()
-    }
-    
+
     private fun checkLineCountAndSetVisibility() {
         tvOverview.movementMethod = LinkMovementMethod.getInstance()
         tvOverview.post {
-            if(tvOverview.lineCount > 3) {
+            if (tvOverview.lineCount > 3) {
                 tvOverviewReadMoreHide.visibility = View.VISIBLE
             } else {
                 tvOverviewReadMoreHide.visibility = View.GONE
@@ -53,11 +55,39 @@ class WithCustomTestActivity : AppCompatActivity() {
 
         tvDescription.movementMethod = LinkMovementMethod.getInstance()
         tvDescription.post {
-            if(tvDescription.lineCount > 3) {
+            if (tvDescription.lineCount > 3) {
                 tvDescriptionReadMoreHide.visibility = View.VISIBLE
             } else {
                 tvDescriptionReadMoreHide.visibility = View.GONE
             }
         }
+    }
+
+    private fun setSpannableClick() {
+        val longString = getString(R.string.demo_long_text)
+        val ss = SpannableString(longString)
+
+        val clickableList = getClickableList()
+        for (clickableObj in clickableList) {
+            if (clickableObj == null) {
+                break
+            }
+            if (clickableObj.word == null) {
+                break
+            }
+            if (longString.contains(clickableObj.word)) {
+                val wordToFind = clickableObj.word
+                val indexStart = longString.indexOf(wordToFind)
+                val indexEnd = indexStart + wordToFind.length
+
+                val clickableSpan: ClickableSpan = object : ClickableSpan() {
+                    override fun onClick(textView: View) {
+                        toast(clickableObj.message)
+                    }
+                }
+                ss.setSpan(clickableSpan, indexStart, indexEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            }
+        }
+        tvOverview.text = ss
     }
 }

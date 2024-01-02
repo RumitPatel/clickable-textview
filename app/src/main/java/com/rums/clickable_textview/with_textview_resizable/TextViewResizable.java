@@ -59,33 +59,39 @@ public class TextViewResizable {
 
     }
 
-    private static SpannableStringBuilder addClickablePartTextViewResizable(final Spanned strSpanned, final TextView tv,
-                                                                            final int maxLine, final String spanableText, final boolean viewMore) {
+    private static SpannableStringBuilder addClickablePartTextViewResizable(
+            final Spanned strSpanned,
+            final TextView tv,
+            final int maxLine,
+            final String spanableText,
+            final boolean viewMore) {
+
         String str = strSpanned.toString();
         SpannableStringBuilder ssb = new SpannableStringBuilder(strSpanned);
 
         if (str.contains(spanableText)) {
-
-
-            ssb.setSpan(new MySpannable(false) {
-                @Override
-                public void onClick(View widget) {
-                    if (viewMore) {
-                        tv.setLayoutParams(tv.getLayoutParams());
-                        tv.setText(tv.getTag().toString(), TextView.BufferType.SPANNABLE);
-                        tv.invalidate();
-                        makeTextViewResizable(tv, -1, tv.getContext().getString(R.string.see_less), false);
-                    } else {
-                        tv.setLayoutParams(tv.getLayoutParams());
-                        tv.setText(tv.getTag().toString(), TextView.BufferType.SPANNABLE);
-                        tv.invalidate();
-                        makeTextViewResizable(tv, 3, tv.getContext().getString(R.string.see_more), true);
-                    }
-                }
-            }, str.indexOf(spanableText), str.indexOf(spanableText) + spanableText.length(), 0);
-
+            ssb.setSpan(
+                    new MySpannable(false) {
+                        @Override
+                        public void onClick(View widget) {
+                            if (viewMore) {
+                                tv.setLayoutParams(tv.getLayoutParams());
+                                tv.setText(tv.getTag().toString(), TextView.BufferType.SPANNABLE);
+                                tv.invalidate();
+                                makeTextViewResizable(tv, -1, tv.getContext().getString(R.string.see_less), false);
+                            } else {
+                                tv.setLayoutParams(tv.getLayoutParams());
+                                tv.setText(tv.getTag().toString(), TextView.BufferType.SPANNABLE);
+                                tv.invalidate();
+                                makeTextViewResizable(tv, 3, tv.getContext().getString(R.string.see_more), true);
+                            }
+                        }
+                    },
+                    str.indexOf(spanableText),
+                    str.indexOf(spanableText) + spanableText.length(),
+                    0
+            );
         }
         return ssb;
-
     }
 }
