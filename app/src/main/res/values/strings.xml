@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">clickable textview</string>
 
-    <string name="see_more">see more</string>
-    <string name="see_less">see less</string>
+    <string name="see_more"><u>Read More</u></string>
+    <string name="see_less"><u>Hide</u></string>
     <string name="demo_long_text">Laminaria is a genus of large brown seaweeds, commonly known as kelp, found in cool, nutrient-rich marine environments. Their complex thallus structure includes a holdfast, stipe, and blade. These seaweeds serves as vital compound of marine ecosystem, offering habitate and sustenance to various marine species.</string>
     <string name="demo_long_hyperlink_text">
         This is a pre part of the description. <a href="https://www.w3schools.com">Click here to open website.</a> This is a post part of the description.
@@ -12,6 +12,7 @@
         This is a pre part of the description. <a href="https://www.w3schools.com">Click here to open website.</a> This is a post part of the description.
         This is a pre part of the description. <a href="https://www.w3schools.com">Click here to open website.</a> This is a post part of the description.
     </string>
+    <string name="demo_html_text"><html>Hello Test user, <a href="https://www.w3schools.com">Click here to open website.</a></html></string>
     <string name="demo_short_text">This is a short test content.</string>
 
 </resources>
