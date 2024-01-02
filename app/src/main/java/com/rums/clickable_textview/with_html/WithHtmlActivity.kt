@@ -7,9 +7,12 @@ import android.text.Spannable
 import android.text.method.LinkMovementMethod
 import android.text.style.URLSpan
 import android.view.MotionEvent
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.rums.clickable_textview.R
+import com.rums.clickable_textview.utils.MAX_SEE_MORE_LINES
+import com.rums.clickable_textview.utils.getClickableList
 import com.rums.clickable_textview.utils.setHtmlStringToTextView
 import com.rums.clickable_textview.utils.toast
 
@@ -52,5 +55,37 @@ class WithHtmlActivity : AppCompatActivity() {
         }
 
         setHtmlStringToTextView(longString, tvOverview)
+
+        handleSeeMore()
+    }
+
+    private fun handleSeeMore() {
+        tvOverview.post {
+            if (tvOverview.lineCount > MAX_SEE_MORE_LINES) {
+                var isContentShorten: Boolean
+                tvOverviewReadMoreHide.visibility = View.VISIBLE
+
+                val lineEndIndex: Int = tvOverview.layout.getLineEnd(MAX_SEE_MORE_LINES - 1)
+                val trimmedText: String = tvOverview.text.subSequence(0, lineEndIndex).toString()
+
+                setHtmlStringToTextView(trimmedText, tvOverview)
+                isContentShorten = true
+                tvOverviewReadMoreHide.setOnClickListener {
+                    if (isContentShorten) {
+                        setHtmlStringToTextView(longString, tvOverview)
+                        isContentShorten = false
+                        tvOverviewReadMoreHide.text = getString(R.string.see_less)
+                    } else {
+                        setHtmlStringToTextView(trimmedText, tvOverview)
+                        isContentShorten = true
+                        tvOverviewReadMoreHide.text = getString(R.string.see_more)
+                    }
+                }
+
+            } else {
+                tvOverviewReadMoreHide.visibility = View.GONE
+                setHtmlStringToTextView(longString, tvOverview)
+            }
+        }
     }
 }
