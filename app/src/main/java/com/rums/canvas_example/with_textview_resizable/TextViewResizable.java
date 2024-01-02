@@ -1,4 +1,4 @@
-package com.rums.canvas_example.utils;
+package com.rums.canvas_example.with_textview_resizable;
 
 import android.text.Html;
 import android.text.SpannableStringBuilder;

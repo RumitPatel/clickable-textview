@@ -1,4 +1,4 @@
-package com.rums.canvas_example.utils;
+package com.rums.canvas_example.with_textview_resizable;
 
 import android.graphics.Color;
 import android.text.TextPaint;
