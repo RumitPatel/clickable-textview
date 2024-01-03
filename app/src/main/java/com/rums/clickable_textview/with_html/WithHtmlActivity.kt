@@ -7,7 +7,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.rums.clickable_textview.R
 import com.rums.clickable_textview.utils.MAX_SEE_MORE_LINES
+import com.rums.clickable_textview.utils.TEST_HTML_STRING
 import com.rums.clickable_textview.utils.setHtmlStringToTextView
+import com.rums.clickable_textview.utils.setUnderLined
 import com.rums.clickable_textview.utils.toast
 
 
@@ -18,9 +20,6 @@ class WithHtmlActivity : AppCompatActivity() {
     private lateinit var tvOverview: TextView
     private lateinit var tvOverviewReadMoreHide: TextView
 
-    private var longString: String? = null
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_with_clickable_span)
@@ -30,55 +29,57 @@ class WithHtmlActivity : AppCompatActivity() {
 
     private fun initComponents() {
         mContext = this
-//        longString = getString(R.string.demo_html_text)
-        longString =
-            "<html>Laminaria is a genus of large brown seaweeds,  Their <a href=\"this is the description of the complex thallus. \">complex thallus.</a> commonly known as kelp, found in cool, nutrient-rich marine environments. <ul>\n" +
-                    "    <li>First item</li>\n" +
-                    "    <li>Second item</li>\n" +
-                    "    <li>Third item</li>\n" +
-                    "</ul> structure includes a holdfast, stipe, and blade. These seaweeds serves as vital compound of marine ecosystem, <a href=\"this is the description of the strucutre.\">the structure.</a> offering habitate and sustenance to various marine species. <br> <br> Thanks.</html>"
-
         tvOverview = findViewById(R.id.tvOverview)
         tvOverviewReadMoreHide = findViewById(R.id.tvOverviewReadMoreHide)
 
+        setTextAndHandleHyperlinkClick(TEST_HTML_STRING, tvOverview, tvOverviewReadMoreHide)
+    }
 
-        tvOverview.movementMethod = object : TextViewLinkHandler() {
+    private fun setTextAndHandleHyperlinkClick(
+        text: String?,
+        textView: TextView,
+        textViewSeeMoreHide: TextView
+    ) {
+        setHtmlStringToTextView(text, textView)
+        textViewSeeMoreHide.setUnderLined()
+        textView.movementMethod = object : TextViewLinkHandler() {
             override fun onLinkClick(url: String?) {
-                toast("clicked data: $url")
+                toast(url)
             }
         }
 
-        setHtmlStringToTextView(longString, tvOverview)
-
-        handleSeeMore()
+        handleSeeMoreOnTvOverview(text, textView, textViewSeeMoreHide)
     }
 
-    private fun handleSeeMore() {
-        tvOverview.post {
-            if (tvOverview.lineCount > MAX_SEE_MORE_LINES) {
+    private fun handleSeeMoreOnTvOverview(
+        text: String?,
+        textView: TextView,
+        textViewSeeMoreHide: TextView
+    ) {
+        textView.post {
+            if (textView.lineCount > MAX_SEE_MORE_LINES) {
                 var isContentShorten: Boolean
-                tvOverviewReadMoreHide.visibility = View.VISIBLE
+                textViewSeeMoreHide.visibility = View.VISIBLE
 
-                val lineEndIndex: Int = tvOverview.layout.getLineEnd(MAX_SEE_MORE_LINES - 1)
-                val trimmedText: String = longString?.subSequence(0, lineEndIndex).toString()
+                val lineEndIndex: Int = textView.layout.getLineEnd(MAX_SEE_MORE_LINES - 1)
+                val trimmedText: String = text?.subSequence(0, lineEndIndex).toString()
 
-                setHtmlStringToTextView(trimmedText, tvOverview)
+                setHtmlStringToTextView(trimmedText, textView)
                 isContentShorten = true
-                tvOverviewReadMoreHide.setOnClickListener {
+                textViewSeeMoreHide.setOnClickListener {
                     if (isContentShorten) {
-                        setHtmlStringToTextView(longString, tvOverview)
+                        setHtmlStringToTextView(text, textView)
                         isContentShorten = false
-                        tvOverviewReadMoreHide.text = getString(R.string.see_less)
+                        textViewSeeMoreHide.text = getString(R.string.see_less)
                     } else {
-                        setHtmlStringToTextView(trimmedText, tvOverview)
+                        setHtmlStringToTextView(trimmedText, textView)
                         isContentShorten = true
-                        tvOverviewReadMoreHide.text = getString(R.string.see_more)
+                        textViewSeeMoreHide.text = getString(R.string.see_more)
                     }
                 }
-
             } else {
-                tvOverviewReadMoreHide.visibility = View.GONE
-                setHtmlStringToTextView(longString, tvOverview)
+                textViewSeeMoreHide.visibility = View.GONE
+                setHtmlStringToTextView(text, textView)
             }
         }
     }
